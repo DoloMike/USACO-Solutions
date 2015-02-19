@@ -1,58 +1,52 @@
-import java.io.*;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-
 /*
 ID: michael205
 LANG: JAVA
 PROG: gift1
 */
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
 public class gift1 {
 	public static void main(String[] args) throws IOException {
+		Scanner in = new Scanner(new File("gift1.in"));
+		final int NP = Integer.valueOf(in.nextLine());
 		
-		BufferedReader in = new BufferedReader(new FileReader("gift1.in"));
-		final int NP = Integer.parseInt(in.readLine());
-		String[] arrayOfNames = new String[NP];
-		HashMap<String, Integer> names = new HashMap<String, Integer>(10);
+		String[] names = new String[NP];
+		HashMap<String, Integer> givers = new HashMap<String, Integer>();
+		
 		for(int i=0; i<NP; i++) {
-			arrayOfNames[i] = in.readLine();
-			names.put(arrayOfNames[i], 0);
+			names[i] = in.nextLine();
+			givers.put(names[i], 0);
 		}
 		
 		for(int i=0; i<NP; i++) {
-			String giver = in.readLine();
-			StringTokenizer st = new StringTokenizer(in.readLine());
-			int initial = Integer.parseInt(st.nextToken());
-			int recipients = Integer.parseInt(st.nextToken());
-			int eachAmt;
+			String giver = in.nextLine();
+			StringTokenizer st = new StringTokenizer(in.nextLine());
+			int giftTotal = Integer.valueOf(st.nextToken());
+			int giftCount = Integer.valueOf(st.nextToken());
 			
-			if(recipients != 0)
-				eachAmt = initial / recipients;
-			else
-				eachAmt = 0;
+			int giftAmt = (giftCount > 0) ? giftTotal / giftCount : 0;
+			int netLoss = giftCount * giftAmt;
+			int currentCash = givers.get(giver);
+			givers.put(giver, currentCash-netLoss);
 			
-			int moneyGiven = eachAmt * recipients;
-			int giverCurrentAmt = names.get(giver);
-			names.remove(giver);
-			names.put(giver, giverCurrentAmt-moneyGiven);
-			
-			for(int j=0; j<recipients; j++) {
-				String currentRecipient = in.readLine();
-				int currentRecipAmt = names.get(currentRecipient);
-				names.remove(currentRecipient);
-				names.put(currentRecipient, currentRecipAmt + eachAmt);
+			for(int j=0; j<giftCount; j++) {
+				String giftee = in.nextLine();
+				currentCash = givers.get(giftee);
+				givers.put(giftee, currentCash+giftAmt);
 			}
 		}
-
+		in.close();
+		
 		PrintWriter out = new PrintWriter(new File("gift1.out"));
 		for(int i=0; i<NP; i++) {
-			out.println(arrayOfNames[i] + " " + names.get(arrayOfNames[i]));
+			out.println(names[i] + ' ' + givers.get(names[i]));
 		}
-		
-		in.close();
-		out.close();
-		System.exit(0);
+		out.close(); System.exit(0);
 	}
 }
-

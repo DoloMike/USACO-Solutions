@@ -1,34 +1,35 @@
-//USACO Section 1.1 - ride
-
 /*
 ID: michael205
 LANG: JAVA
 PROG: ride
 */
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class ride {
-	public static void main(String[] args) throws Exception {
-		BufferedReader input = new BufferedReader(new FileReader("ride.in"));
-		PrintWriter output = new PrintWriter(new BufferedWriter(new FileWriter("ride.out")));			
-		if(hash(input.readLine()) == hash(input.readLine())) {
-			output.println("GO");
+	public static void main(String[] args) throws IOException {
+		Scanner in = new Scanner(new File("ride.in"));
+		PrintWriter out = new PrintWriter(new File("ride.out"));
+		
+		if(hash(in.nextLine()) == hash(in.nextLine())) {
+			out.println("GO");
 		} else {
-			output.println("STAY");
+			out.println("STAY");
 		}
 		
-		input.close(); output.close();
+		in.close(); out.close();
+		System.exit(0);
 	}
 	
-	private static int hash(String s) {
-		int h=1;
-		for(int i=0; i<s.length(); i++)
-			h *= (s.charAt(i)-'A'+1);
-		return h%47;
+	private static int hash(String name) {
+		int result = 1;
+		for(int i = 0; i<name.length(); i++) {
+			result *= name.charAt(i)-'A'+1;
+		}
+		result %= 47;
+		return result;
 	}
 }
