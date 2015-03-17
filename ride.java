@@ -17,9 +17,9 @@ For instance, the group "USACO" would be 21 * 19 * 1 * 3 * 15 = 17955.
 If the group's number mod 47 is the same as the comet's number mod 47, then you need to tell the group to get ready! 
 (Remember that "a mod b" is the remainder left over after dividing a by b; 34 mod 10 is 4.)  
 
- Write a program which reads in the name of the comet and the name of the group and figures out whether, according
- to the above scheme, the names are a match, printing "GO" if they match and "STAY" if not. 
- The names of the groups and the comets will be a string of capital letters with no spaces or punctuation, up to 6 characters long.
+Write a program which reads in the name of the comet and the name of the group and figures out whether, according
+to the above scheme, the names are a match, printing "GO" if they match and "STAY" if not. 
+The names of the groups and the comets will be a string of capital letters with no spaces or punctuation, up to 6 characters long.
 */
 
 import java.io.File;
